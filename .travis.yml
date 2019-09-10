@@ -1,0 +1,14 @@
+# tell travis we need to have a copy of docker running
+sudo: required
+services:
+  - docker
+
+# build our image using Dockerfile.dev
+before_install:
+  - docker build -t acousineau/docker-react -f Dockerfile.dev .
+
+# tell travis how to run our test suite
+script:
+  - docker run -e CI=true acousineau/docker-react yarn test -- --coverage
+
+# tell travis how to deploy our code to AWS 
