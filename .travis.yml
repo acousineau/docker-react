@@ -12,3 +12,16 @@ script:
   - docker run -e CI=true acousineau/docker-react yarn test -- --coverage
 
 # tell travis how to deploy our code to AWS 
+deploy:
+  provider: elasticbeanstalk # travisCI has a base configuration for certain services (digital ocean, azure, aws)
+  region: "us-east-1"
+  app: "Docker React Tutorial"
+  env: "DockerReactTutorial-env"
+  bucket_name: "elasticbeanstalk-us-east-1-393102460116" # s3 bucket
+  bucket_path: "Docker React Tutorial"
+  on:
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
